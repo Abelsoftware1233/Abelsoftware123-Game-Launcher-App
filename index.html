@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Abelsoftware123 Game Launcher</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #07070f;
+      --surface:  #10101e;
+      --card:     #14142a;
+      --border:   rgba(255,255,255,0.07);
+      --red:      #e94560;
+      --gold:     #f5a623;
+      --cyan:     #00d4ff;
+      --white:    #f0f0ff;
+      --muted:    #5a5a7a;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Rajdhani', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── STARS BACKGROUND ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 30% 70%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 55% 15%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 75% 45%, rgba(255,255,255,0.25) 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 80%, rgba(255,255,255,0.35) 0%, transparent 100%),
+        radial-gradient(1px 1px at 20% 90%, rgba(255,255,255,0.2) 0%, transparent 100%),
+        radial-gradient(1px 1px at 65% 60%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(2px 2px at 45% 35%, rgba(255,255,255,0.15) 0%, transparent 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 60px 20px 40px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(233,69,96,0.06) 0%, transparent 100%);
+    }
+
+    .logo-line {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      margin-bottom: 12px;
+    }
+
+    .logo-icon {
+      width: 52px; height: 52px;
+      background: linear-gradient(135deg, var(--red), #ff6b35);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px;
+      box-shadow: 0 0 30px rgba(233,69,96,0.5);
+    }
+
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1.6rem, 4vw, 2.8rem);
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+    }
+
+    h1 span.abel { color: var(--red); }
+    h1 span.soft { color: var(--gold); }
+    h1 span.num  { color: var(--cyan); }
+
+    .tagline {
+      font-size: 1rem;
+      color: var(--muted);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-top: 8px;
+    }
+
+    /* ── MAIN LAYOUT ── */
+    main {
+      position: relative;
+      z-index: 10;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 70px;
+    }
+
+    /* ── SECTION HEADER ── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+
+    .section-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 22px;
+      border-radius: 40px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .badge-red {
+      background: rgba(233,69,96,0.12);
+      border: 1px solid rgba(233,69,96,0.4);
+      color: var(--red);
+      box-shadow: 0 0 20px rgba(233,69,96,0.15);
+    }
+
+    .badge-gold {
+      background: rgba(245,166,35,0.10);
+      border: 1px solid rgba(245,166,35,0.4);
+      color: var(--gold);
+      box-shadow: 0 0 20px rgba(245,166,35,0.15);
+    }
+
+    .badge-cyan {
+      background: rgba(0,212,255,0.08);
+      border: 1px solid rgba(0,212,255,0.35);
+      color: var(--cyan);
+      box-shadow: 0 0 20px rgba(0,212,255,0.15);
+    }
+
+    .section-line {
+      flex: 1;
+      height: 1px;
+      opacity: 0.2;
+    }
+
+    .line-red  { background: linear-gradient(90deg, var(--red), transparent); }
+    .line-gold { background: linear-gradient(90deg, var(--gold), transparent); }
+    .line-cyan { background: linear-gradient(90deg, var(--cyan), transparent); }
+
+    /* ── GRID ── */
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    /* ── GAME BUTTON ── */
+    .game-btn {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+      padding: 20px 20px 18px;
+      background: var(--card);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      color: var(--white);
+      cursor: pointer;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    }
+
+    /* shine sweep */
+    .game-btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -80%;
+      width: 60%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+      transform: skewX(-15deg);
+      transition: left 0.5s;
+    }
+
+    .game-btn:hover::before { left: 150%; }
+
+    /* accent top bar */
+    .game-btn::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      border-radius: 12px 12px 0 0;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .game-btn:hover { transform: translateY(-3px); }
+
+    /* red group */
+    .red-group .game-btn:hover   { border-color: rgba(233,69,96,0.45); box-shadow: 0 8px 30px rgba(233,69,96,0.18); }
+    .red-group .game-btn::after  { background: var(--red); }
+    .red-group .game-btn:hover::after { opacity: 1; }
+
+    /* gold group */
+    .gold-group .game-btn:hover  { border-color: rgba(245,166,35,0.45); box-shadow: 0 8px 30px rgba(245,166,35,0.18); }
+    .gold-group .game-btn::after { background: var(--gold); }
+    .gold-group .game-btn:hover::after { opacity: 1; }
+
+    /* cyan group */
+    .cyan-group .game-btn:hover  { border-color: rgba(0,212,255,0.45); box-shadow: 0 8px 30px rgba(0,212,255,0.18); }
+    .cyan-group .game-btn::after { background: var(--cyan); }
+    .cyan-group .game-btn:hover::after { opacity: 1; }
+
+    .game-icon {
+      font-size: 1.6rem;
+      margin-bottom: 4px;
+    }
+
+    .game-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      line-height: 1.3;
+    }
+
+    .game-sub {
+      font-size: 0.78rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    .play-tag {
+      position: absolute;
+      bottom: 14px; right: 16px;
+      font-size: 0.65rem;
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .game-btn:hover .play-tag { opacity: 1; }
+    .red-group  .play-tag { color: var(--red); }
+    .gold-group .play-tag { color: var(--gold); }
+    .cyan-group .play-tag { color: var(--cyan); }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 0.8rem;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    footer span { color: var(--red); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .games-grid { grid-template-columns: 1fr 1fr; }
+      .section-badge { font-size: 0.72rem; padding: 7px 14px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-line">
+    <div class="logo-icon">🎮</div>
+    <h1>
+      <span class="abel">Abel</span><span class="soft">software</span><span class="num">123</span>
+    </h1>
+  </div>
+  <p class="tagline">Game Launcher &nbsp;·&nbsp; Select &amp; Play</p>
+</header>
+
+<main>
+
+  <!-- ══════════════════════════════════════
+       SECTIE 1 — Abel123 Mario Package
+  ══════════════════════════════════════ -->
+  <section class="red-group">
+    <div class="section-header">
+      <div class="section-badge badge-red">🍄 Abel123 Mario Package</div>
+      <div class="section-line line-red"></div>
+    </div>
+    <div class="games-grid">
+
+      <a class="game-btn" href="https://abelsoftware123.github.io/mario/" target="_blank">
+        <div class="game-icon">🍄</div>
+        <div class="game-title">Super Mario Bros</div>
+        <div class="game-sub">Classic platformer</div>
+        <span class="play-tag">▶ Speel</span>
+      </a>
+
+      <a class="game-btn" href="https://abelsoftware123.github.io/mario-maker/" target="_blank">
+        <div class="game-icon">🔧</div>
+        <div class="game-title">Mario Maker</div>
+        <div class="game-sub">Level editor PWA</div>
+        <span class="play-tag">▶ Speel</span>
+      </a>
+
+      <a class="game-btn" href="https://abelsoftware123.github.io/mario-world/" target="_blank">
+        <div class="game-icon">🌍</div>
+        <div class="game-title">Mario World</div>
+        <div class="game-sub">Multi-world adventure</div>
+        <span class="play-tag">▶ Speel</span>
+      </a>
+
+      <a class="game-btn" href="https://abelsoftware123.github.io/mario-kart/" target="_blank">
+        <div class="game-icon">🏎️</div>
+        <div class="game-title">Mario Kart</div>
+        <div class="game-sub">Racing challenge</div>
+        <span class="play-tag">▶ Speel</span>
+      </a>
+
+      <a class="game-btn" href="https://abelsoftware123.github.io/mario-party/" target="_blank">
+        <div class="game-icon">🎉</div>
+        <div class="game-title">Mario Party</div>
+        <div class="game-sub">Mini-games galore</div>
+        <span class="play-tag">▶ Speel</span>
+      </a>
+
+      <a class="game-btn" href="https://abelsoftware123.github.io/mario-galaxy/" target="_blank">
+        <div class="game-icon">🌌</div>
+        <div class="game-title">Mario Galaxy</div>
+        <div class="game-sub">Space platformer</div>
+        <span class="play-tag">▶ Speel</span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       SECTIE 2 — Abel123 Own Brand Games
+  ══════════════════════════════════════ -->
+  <section class="gold-group">
+    <div class="section-header">
+      <div class="section-badge badge-gold">⭐ Abel123 Own Brand Games</div>
+      <div class="section-line line-gold"></div>
+    </div>
+    <div class="games-grid">
+
+      <a class="game-btn" href="https://abelsoftware123.github.io/faiselcraft/" target="_blank">
+        <div class="game-icon">⛏️</div>
+        <div class="game-title">FaiselCraft</div>
+        <div class="game-sub">Mario × Minecraft</div>
+        <span class="play-tag">▶ Speel</span>
+      </a>
+
+      <a class="game-btn" href="https://abelsoftware123.github.io/faisel-stars/" target="_blank">
+        <div class="game-icon">⭐</div>
+        <div class="game-title">Faisel Stars</div>
+        <div class="game-sub">Brawl Stars-stijl</div>
+        <span class="play-tag">▶ Speel</span>
+      </a>
+
+      <a class="game-btn" href="https://abelsoftware123.github.io/demolition-master/" target="_blank">
+        <div class="game-icon">💣</div>
+        <div class="game-title">Demolition Master</div>
+        <div class="game-sub">Physics puzzler</div>
+        <span class="play-tag">▶ Speel</span>
+      </a>
+
+      <a class="game-btn" href="https://abelsoftware123.github.io/abel123-demolition/" target="_blank">
+        <div class="game-icon">🔥</div>
+        <div class="game-title">Abel123 Demolition</div>
+        <div class="game-sub">Neon edition</div>
+        <span class="play-tag">▶ Speel</span>
+      </a>
+
+      <a class="game-btn" href="https://abelsoftware123.github.io/abel-racer/" target="_blank">
+        <div class="game-icon">🚀</div>
+        <div class="game-title">Abel Racer</div>
+        <div class="game-sub">Futuristic speed</div>
+        <span class="play-tag">▶ Speel</span>
+      </a>
+
+      <a class="game-btn" href="https://abelsoftware123.github.io/abel-shooter/" target="_blank">
+        <div class="game-icon">🔫</div>
+        <div class="game-title">Abel Shooter</div>
+        <div class="game-sub">Top-down action</div>
+        <span class="play-tag">▶ Speel</span>
+      </a>
+
+      <a class="game-btn" href="https://abelsoftware123.github.io/abel-puzzle/" target="_blank">
+        <div class="game-icon">🧩</div>
+        <div class="game-title">Abel Puzzle</div>
+        <div class="game-sub">Brain challenge</div>
+        <span class="play-tag">▶ Speel</span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       SECTIE 3 — Abel123 WMWario Package
+  ══════════════════════════════════════ -->
+  <section class="cyan-group">
+    <div class="section-header">
+      <div class="section-badge badge-cyan">💛 Abel123 WMWario Package</div>
+      <div class="section-line line-cyan"></div>
+    </div>
+    <div class="games-grid">
+
+      <a class="game-btn" href="https://abelsoftware123.github.io/wario-land/" target="_blank">
+        <div class="game-icon">💛</div>
+        <div class="game-title">Wario Land</div>
+        <div class="game-sub">Treasure hunter</div>
+        <span class="play-tag">▶ Speel</span>
+      </a>
+
+      <a class="game-btn" href="https://abelsoftware123.github.io/wario-ware/" target="_blank">
+        <div class="game-icon">⚡</div>
+        <div class="game-title">Wario Ware</div>
+        <div class="game-sub">Micro-games rush</div>
+        <span class="play-tag">▶ Speel</span>
+      </a>
+
+      <a class="game-btn" href="https://abelsoftware123.github.io/wario-world/" target="_blank">
+        <div class="game-icon">🏰</div>
+        <div class="game-title">Wario World</div>
+        <div class="game-sub">3D brawler</div>
+        <span class="play-tag">▶ Speel</span>
+      </a>
+
+      <a class="game-btn" href="https://abelsoftware123.github.io/wario-master/" target="_blank">
+        <div class="game-icon">👑</div>
+        <div class="game-title">WM Wario Master</div>
+        <div class="game-sub">Boss rush mode</div>
+        <span class="play-tag">▶ Speel</span>
+      </a>
+
+      <a class="game-btn" href="https://abelsoftware123.github.io/wario-gold/" target="_blank">
+        <div class="game-icon">🥇</div>
+        <div class="game-title">Wario Gold Rush</div>
+        <div class="game-sub">Endless collector</div>
+        <span class="play-tag">▶ Speel</span>
+      </a>
+
+      <a class="game-btn" href="https://abelsoftware123.github.io/wario-dash/" target="_blank">
+        <div class="game-icon">💨</div>
+        <div class="game-title">Wario Dash</div>
+        <div class="game-sub">Infinite runner</div>
+        <span class="play-tag">▶ Speel</span>
+      </a>
+
+      <a class="game-btn" href="https://abelsoftware123.github.io/wario-blast/" target="_blank">
+        <div class="game-icon">💥</div>
+        <div class="game-title">Wario Blast</div>
+        <div class="game-sub">Bomberman style</div>
+        <span class="play-tag">▶ Speel</span>
+      </a>
+
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  &copy; 2026 &nbsp;<span>Abelsoftware123</span>&nbsp; — All rights reserved
+</footer>
+
+</body>
+</html>
